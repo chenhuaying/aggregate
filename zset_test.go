@@ -60,4 +60,9 @@ func TestZsetIterator(t *testing.T) {
 		}
 		c++
 	}
+
+	i = z.LowerBound(40)
+	if !i.End() {
+		t.Error("find 40 node?")
+	}
 }
