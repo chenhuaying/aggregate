@@ -16,6 +16,29 @@ func TestZsetNew(t *testing.T) {
 	}
 }
 
+func TestZsetIteratorBeginAndEnd(t *testing.T) {
+	z := NewZset()
+	z.Insert(3, "test-3")
+	for j := 0; j < 10; j++ {
+		key := 10 + j
+		value := fmt.Sprintf("test-%d", key)
+		z.Insert(uint32(key), value)
+	}
+	z.Insert(25, "test-25")
+	z.Insert(35, "test-35")
+
+	i := z.Find(3)
+	fmt.Printf("is Begin %v, %d %v\n", i.Begin(), i.First(), i.Second())
+	if !i.Begin() {
+		t.Error("3 is the begin, why this case failed?")
+	}
+
+	i = z.Find(21)
+	if !i.End() {
+		t.Error("21 is not in the zset, why iterator not at end?")
+	}
+}
+
 func TestZsetIterator(t *testing.T) {
 	z := NewZset()
 	z.Insert(3, "test-3")

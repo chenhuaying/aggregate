@@ -40,6 +40,14 @@ func (i *ZsetIterator) Prev() {
 	i.currNode = i.currNode.Prev()
 }
 
+func (i *ZsetIterator) Begin() bool {
+	if i.currNode == i.aggregate.First() {
+		return true
+	} else {
+		return false
+	}
+}
+
 func (i *ZsetIterator) End() bool {
 	if i.currNode == nil {
 		return true

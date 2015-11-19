@@ -7,5 +7,6 @@ type Iterator interface {
 	First() interface{}
 	// the value of the container
 	Second() interface{}
+	Begin() bool
 	End() bool
 }
