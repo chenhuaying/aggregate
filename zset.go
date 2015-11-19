@@ -5,42 +5,42 @@ import (
 	"github.com/user/skiplist"
 )
 
-type zset struct {
+type Zset struct {
 	*skiplist.SkipList
 }
 
-type SkipListIterator struct {
+type ZsetIterator struct {
 	currNode  *skiplist.SkipListNode
-	aggregate *zset
+	aggregate *Zset
 }
 
-func NewZset() *zset {
-	return &zset{skiplist.NewSkipList()}
+func NewZset() *Zset {
+	return &Zset{skiplist.NewSkipList()}
 }
 
-func (s *zset) Iterator() iterator.Iterator {
-	return &SkipListIterator{currNode: s.First(), aggregate: s}
+func (s *Zset) Iterator() iterator.Iterator {
+	return &ZsetIterator{currNode: s.First(), aggregate: s}
 }
 
-func (s *zset) Find(key uint32) iterator.Iterator {
+func (s *Zset) Find(key uint32) iterator.Iterator {
 	node := s.SearchNode(key)
-	return &SkipListIterator{currNode: node, aggregate: s}
+	return &ZsetIterator{currNode: node, aggregate: s}
 }
 
-func (s *zset) LowerBound(key uint32) iterator.Iterator {
+func (s *Zset) LowerBound(key uint32) iterator.Iterator {
 	node := s.LowerBoundNode(key)
-	return &SkipListIterator{currNode: node, aggregate: s}
+	return &ZsetIterator{currNode: node, aggregate: s}
 }
 
-func (i *SkipListIterator) Next() {
+func (i *ZsetIterator) Next() {
 	i.currNode = i.currNode.Next()
 }
 
-func (i *SkipListIterator) Prev() {
+func (i *ZsetIterator) Prev() {
 	i.currNode = i.currNode.Prev()
 }
 
-func (i *SkipListIterator) End() bool {
+func (i *ZsetIterator) End() bool {
 	if i.currNode == nil {
 		return true
 	} else {
@@ -48,7 +48,7 @@ func (i *SkipListIterator) End() bool {
 	}
 }
 
-func (i *SkipListIterator) First() interface{} {
+func (i *ZsetIterator) First() interface{} {
 	if i.currNode != nil {
 		return i.currNode.Key()
 	} else {
@@ -56,7 +56,7 @@ func (i *SkipListIterator) First() interface{} {
 	}
 }
 
-func (i *SkipListIterator) Second() interface{} {
+func (i *ZsetIterator) Second() interface{} {
 	if i.currNode != nil {
 		return i.currNode.Value()
 	} else {
