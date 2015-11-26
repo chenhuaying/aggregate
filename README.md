@@ -16,4 +16,4 @@ every type implements the **Comparer** interface can be using as the key
 
 ## tool
 the tool generate a template for the new type
-usage: tool * <type name >*
+usage: tool *<type name>*
