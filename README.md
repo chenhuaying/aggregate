@@ -1,7 +1,7 @@
 aggregate
 =========
 ## zset
-the key of zset is uint32 line [redis](http://redis.io)
+the key of zset is uint32 like [redis](http://redis.io), but haven't support range feature
 
 ## zmap
 the key of zmap is an interface
