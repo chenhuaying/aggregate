@@ -1,7 +1,6 @@
 package main
 
 import (
-	_ "bufio"
 	"fmt"
 	"os"
 	"text/template"
@@ -89,16 +88,30 @@ func (i *{{.Name}}Iterator) End() bool {
 	}
 }
 `
+	args := os.Args
+	if len(args) < 2 {
+		args = append(args, "TestAggregate")
+		fmt.Println("Default use test type name:", args[1])
+	}
 	g := param{
-		Name: "Zmap",
+		Name: args[1],
 	}
 
-	outFile, err := os.Create("text.txt")
+	outFileName := g.Name + ".go"
+	if info, err := os.Stat(outFileName); err == nil {
+		if info.Size() != int64(0) {
+			fmt.Printf("The %s has been exist, please make sure you have type the right name\n", outFileName)
+			os.Exit(2)
+		}
+	}
+
+	outFile, err := os.Create(outFileName)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(2)
 	}
-	//output := bufio.NewWriter(outFile)
+	defer outFile.Close()
+
 	t := template.Must(template.New("aggregate").Parse(st))
 	if err := t.Execute(outFile, g); err != nil {
 		fmt.Println(err)
