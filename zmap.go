@@ -33,6 +33,11 @@ func (s *Zmap) LowerBound(key container.Comparer) iterator.Iterator {
 	return &ZmapIterator{currNode: node, aggregate: s}
 }
 
+func (s *Zmap) Delete(key container.Comparer) interface{} {
+	node := s.DeleteNode(key)
+	return node.Value()
+}
+
 func (i *ZmapIterator) Next() {
 	i.currNode = i.currNode.Next()
 }
