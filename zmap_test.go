@@ -2,6 +2,7 @@ package aggregate
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 
 	"github.com/user/container"
@@ -108,9 +109,13 @@ func TestZmapIteratorAssignment(t *testing.T) {
 
 	itr := z.LowerBound(KeyUint(5))
 
-	itr2 := (itr).(*ZmapIterator).IteratorCopy((itr).(*ZmapIterator))
+	itr2 := (itr).(*ZmapIterator).IteratorDup()
 	if itr2.(*ZmapIterator).aggregate != itr.(*ZmapIterator).aggregate ||
 		itr2.(*ZmapIterator).currNode != itr.(*ZmapIterator).currNode {
 		t.Error("copy iterator of zmap failed")
+	}
+
+	if reflect.ValueOf(itr2) == reflect.ValueOf(itr) {
+		t.Error("not dup iterator of zmap")
 	}
 }

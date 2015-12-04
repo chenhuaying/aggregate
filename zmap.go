@@ -38,8 +38,8 @@ func (s *Zmap) Delete(key container.Comparer) interface{} {
 	return node.Value()
 }
 
-func (i *ZmapIterator) IteratorCopy(itr *ZmapIterator) iterator.Iterator {
-	return &ZmapIterator{currNode: itr.currNode, aggregate: itr.aggregate}
+func (i *ZmapIterator) IteratorDup() iterator.Iterator {
+	return &ZmapIterator{currNode: i.currNode, aggregate: i.aggregate}
 }
 
 func (i *ZmapIterator) Next() {
