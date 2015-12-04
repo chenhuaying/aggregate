@@ -109,6 +109,8 @@ func TestZmapIteratorAssignment(t *testing.T) {
 	itr := z.LowerBound(KeyUint(5))
 
 	itr2 := (itr).(*ZmapIterator).IteratorCopy((itr).(*ZmapIterator))
-	fmt.Printf("%p, %p\n", itr, itr2)
-	fmt.Printf("%v, %v\n", itr, itr2)
+	if itr2.(*ZmapIterator).aggregate != itr.(*ZmapIterator).aggregate ||
+		itr2.(*ZmapIterator).currNode != itr.(*ZmapIterator).currNode {
+		t.Error("copy iterator of zmap failed")
+	}
 }
