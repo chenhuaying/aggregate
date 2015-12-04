@@ -97,3 +97,18 @@ func TestZmapIterator(t *testing.T) {
 		t.Error("find 40 node?")
 	}
 }
+
+func TestZmapIteratorAssignment(t *testing.T) {
+	z := NewZmap()
+	for j := 0; j < 10; j++ {
+		key := 10 + j
+		value := fmt.Sprintf("test-%d", key)
+		z.Insert(KeyUint(key), value)
+	}
+
+	itr := z.LowerBound(KeyUint(5))
+
+	itr2 := (itr).(*ZmapIterator).IteratorCopy((itr).(*ZmapIterator))
+	fmt.Printf("%p, %p\n", itr, itr2)
+	fmt.Printf("%v, %v\n", itr, itr2)
+}
