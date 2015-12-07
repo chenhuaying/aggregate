@@ -14,6 +14,10 @@ func (k KeyUint) Less(x container.Comparer) bool {
 	return k < x.(KeyUint)
 }
 
+func lessFn(x, y container.Comparer) bool {
+	return x.(KeyUint) < y.(KeyUint)
+}
+
 func TestZmapNew(t *testing.T) {
 	z := NewZmap()
 	if z.IsEmpty() != true {
@@ -117,5 +121,25 @@ func TestZmapIteratorAssignment(t *testing.T) {
 
 	if reflect.ValueOf(itr2) == reflect.ValueOf(itr) {
 		t.Error("not dup iterator of zmap")
+	}
+}
+
+func TestZmapLowerBoundFn(t *testing.T) {
+	z := NewZmap()
+	z.Insert(KeyUint(3), "test-3")
+	for j := 0; j < 10; j++ {
+		key := 10 + j
+		value := fmt.Sprintf("test-%d", key)
+		z.Insert(KeyUint(key), value)
+	}
+	z.Insert(KeyUint(25), "test-25")
+	z.Insert(KeyUint(35), "test-35")
+
+	dest := []uint32{25, 35}
+	for j, c := z.LowerBound(KeyUint(20)), 0; !j.End(); j.Next() {
+		if uint32(j.First().(KeyUint)) != dest[c] {
+			t.Error("prev iterator error")
+		}
+		c++
 	}
 }
