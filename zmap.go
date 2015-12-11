@@ -40,7 +40,11 @@ func (s *Zmap) LowerBoundFn(key container.Comparer, fn func(x, y container.Compa
 
 func (s *Zmap) Delete(key container.Comparer) interface{} {
 	node := s.DeleteNode(key)
-	return node.Value()
+	if node != nil {
+		return node.Value()
+	} else {
+		return nil
+	}
 }
 
 func (i *ZmapIterator) IteratorDup() iterator.Iterator {
