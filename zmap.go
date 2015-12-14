@@ -1,9 +1,9 @@
 package aggregate
 
 import (
-	"github.com/user/aggregate/iterator"
-	"github.com/user/container"
-	"github.com/user/container/skiplist"
+	"github.com/chenhuaying/aggregate/iterator"
+	"github.com/chenhuaying/container"
+	"github.com/chenhuaying/container/skiplist"
 )
 
 type Zmap struct {

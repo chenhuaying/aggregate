@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/user/container"
+	"github.com/chenhuaying/container"
 )
 
 type KeyUint uint32

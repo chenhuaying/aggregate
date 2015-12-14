@@ -1,8 +1,8 @@
 package aggregate
 
 import (
-	"github.com/user/aggregate/iterator"
-	"github.com/user/skiplist"
+	"github.com/chenhuaying/aggregate/iterator"
+	"github.com/chenhuaying/skiplist"
 )
 
 type Zset struct {
